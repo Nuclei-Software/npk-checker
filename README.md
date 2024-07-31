@@ -6,6 +6,8 @@
 
 关于 `NPK`的设计文档目前请参见: https://github.com/Nuclei-Software/nuclei-sdk/wiki/Nuclei-Studio-NPK-Introduction
 
+**如果使用上有Bug反馈，请直接发 [issue](https://github.com/Nuclei-Software/npk-checker/issues) 给本项目，也欢迎直接给项目贡献修改。**
+
 ## 必需的第三方库
 
 为了启用此工具的所有特性，您需要确保以下第三方库已被安装：
