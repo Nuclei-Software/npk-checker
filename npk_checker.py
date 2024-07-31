@@ -2,6 +2,7 @@ import argparse
 import sys
 import os
 import zipfile
+import importlib
 import subprocess
 import shutil
 import hashlib
@@ -12,6 +13,7 @@ import re
 
 npk_info = None
 type = True
+any_missing = False
 
 SCRIPTS_TO_RUN = [
     "npk_format.py",
@@ -20,6 +22,11 @@ SCRIPTS_TO_RUN = [
     "npk_dependent.py",
 ]
 
+MODULES_TO_CHECK = [
+    ('semantic_version', 'semantic-version'),
+    ('yaml', 'PyYAML'),
+    ('jsonschema', 'jsonschema')
+]
 
 class Logger:
     def __init__(self, filename=None):
@@ -39,7 +46,14 @@ class Logger:
         # 关闭文件
         self.log.close()
 
-
+def check_module_installed(module_name,install_name):
+    global any_missing
+    try:
+        importlib.import_module(module_name)
+    except ImportError:
+        print(f"{install_name} is NOT installed.")
+        any_missing = True
+        
 def run_external_script(script_path, directory, logfile_path):
     global npk_info
     command = [sys.executable, script_path, directory]
@@ -84,9 +98,17 @@ def format_size(size_bytes):
     p = math.pow(1024, i)
     s = round(size_bytes / p, 2)
     return "{} {}".format(s, size_name[i])
-
+    
 
 def main():
+    
+    for module, install_name in MODULES_TO_CHECK:
+        check_module_installed(module, install_name)
+        
+    if any_missing:
+        print("Detected missing Python dependency libraries. Please install all required modules to proceed.")
+        sys.exit(1) 
+        
     parser = argparse.ArgumentParser(description="NPK组件包校验工具")
     parser.add_argument("path", help="要校验的目录或文件路径,文件只支持*.zip和*.yml")
     parser.add_argument("-log", "--logfile", help="结果写入文件路径")
