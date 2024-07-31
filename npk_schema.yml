@@ -1,0 +1,803 @@
+---
+$schema: http://json-schema.org/draft-07/schema#
+title: Nuclei Package Design Schema
+type: object
+required:
+  - name
+  - type
+  - version
+  - owner
+properties:
+  name:
+    type: string
+    pattern: ^[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*$
+  owner:
+    oneOf:
+      - type: string
+      - type: "null"
+  version:
+    oneOf:
+      - type: string
+        pattern: ^([0-9]\d*)\.([0-9]\d*)\.([0-9]\d*)(?:-[a-zA-Z0-9]+)?$
+      - type: "null"
+  description:
+    oneOf:
+      - type: string
+      - type: "null"
+  type:
+    enum:
+      - csp
+      - ssp
+      - bsp
+      - osp
+      - app
+      - mwp
+      - sdk
+      - tpp
+      - tool
+  details:
+    oneOf:
+      - type: string
+      - type: "null"
+  os:
+    oneOf:
+      - type: string
+      - type: "null"
+  category:
+    oneOf:
+      - type: string
+      - type: "null"
+  keywords:
+    oneOf:
+      - type: "null"
+      - type: array
+        items:
+          oneOf:
+            - type: string
+            - type: "null"
+  license:
+    oneOf:
+      - type: string
+      - type: "null"
+  contributors:
+    oneOf:
+      - type: "null"
+      - type: array
+        items:
+          oneOf:
+            - type: string
+            - type: "null"
+  homepage:
+    oneOf:
+      - type: string
+      - type: "null"
+  packinfo:
+    oneOf:
+      - type: "null"
+      - type: object
+        additionalProperties: false
+        properties:
+          core_vendor:
+            oneOf:
+              - type: string
+              - type: "null"
+          vendor:
+            oneOf:
+              - type: string
+              - type: "null"
+          name:
+            oneOf:
+              - type: string
+              - type: "null"
+          doc:
+            oneOf:
+              - type: "null"
+              - type: object
+                additionalProperties: false
+                properties:
+                  website:
+                    oneOf:
+                      - type: string
+                      - type: "null"
+                  sch:
+                    oneOf:
+                      - type: string
+                      - type: "null"
+                  datasheet:
+                    oneOf:
+                      - type: string
+                      - type: "null"
+                  usermanual:
+                    oneOf:
+                      - type: string
+                      - type: "null"
+                  extra:
+                    oneOf:
+                      - type: "null"
+                      - type: array
+                        items:
+                          oneOf:
+                            - type: "null"
+                              type: object
+                              additionalProperties: false
+                              properties:
+                                uri:
+                                  oneOf:
+                                    - type: string
+                                    - type: "null"
+                                description:
+                                  oneOf:
+                                    - type: string
+                                    - type: "null"
+
+  dependencies:
+    oneOf:
+      - type: "null"
+      - type: array
+        items:
+          type: object
+          additionalProperties: false
+          properties:
+            name:
+              oneOf:
+                - type: string
+                - type: "null"
+            owner:
+              oneOf:
+                - type: string
+                - type: "null"
+            version:
+              oneOf:
+                - type: string
+                  pattern: ^([0-9]\d*)\.([0-9]\d*)\.([0-9]\d*)(?:-[a-zA-Z0-9]+)?$
+                - type: "null"
+  configuration:
+    oneOf:
+      - type: "null"
+      - type: object
+        patternProperties:
+          '^.*$':  
+            type: object
+            additionalProperties: false
+            properties:
+              default_value:
+                oneOf:
+                  - type: string
+                  - type: "null"  
+                  - type: integer
+                  - type: boolean
+                  - type: array
+              value:
+                oneOf:
+                  - type: string
+                  - type: "null"  
+                  - type: integer
+                  - type: boolean
+                  - type: array
+              tips:
+                oneOf:
+                  - type: string
+                  - type: "null"  
+              hints:
+                oneOf:
+                  - type: string
+                  - type: "null"  
+              type:
+                enum:
+                  - choice
+                  - list
+                  - checkbox
+                  - multicheckbox
+                  - text
+                  - multitext
+                  - multichoice
+                  - cascaderchoice
+                  - switchbutton
+                  - slider
+                  - spinner
+                  - multispinner
+                  - multicheckbox_v2
+                  - multiradio
+              global:
+                oneOf:
+                  - type: boolean
+                  - type: "null"
+              description:
+                oneOf:
+                  - type: string
+                  - type: "null"
+              param:
+                oneOf:
+                  - type: "null"
+                  - type: object
+                    additionalProperties: false
+                    properties:
+                      name:
+                        oneOf:
+                          - type: string
+                          - type: integer
+                          - type: array
+                          - type: "null"
+                          - type: boolean
+                      description:
+                        oneOf:
+                          - type: string
+                          - type: integer
+                          - type: array
+                          - type: "null"
+                      range:
+                        oneOf:
+                          - type: string
+                          - type: integer
+                          - type: array
+                          - type: "null"
+              choices:
+                oneOf:
+                  - type: "null"
+                  - type: array
+                    items:
+                      type: object
+                      additionalProperties: false
+                      properties:
+                        name:
+                          oneOf:
+                            - type: string
+                            - type: integer
+                            - type: "null"
+                        arch:
+                          oneOf:
+                            - type: string
+                            - type: integer
+                            - type: "null"
+                        abi:
+                          oneOf:
+                            - type: string
+                            - type: integer
+                            - type: "null"
+                        tune:
+                          oneOf:
+                            - type: string
+                            - type: integer
+                            - type: "null"
+                        cmodel:
+                          oneOf:
+                            - type: string
+                            - type: integer
+                            - type: "null"
+                        description:
+                          oneOf:
+                            - type: string
+                            - type: "null"
+                        info:
+                          oneOf:
+                            - type: "null"
+                            - type: array
+                              items:
+                                type: object
+                                additionalProperties: false
+                                properties:
+                                  name:
+                                    oneOf:
+                                      - type: string
+                                      - type: "null"
+                                  value:
+                                    oneOf:
+                                      - type: string
+                                      - type: integer
+                                      - type: "null"
+                                  condition:
+                                    oneOf:
+                                      - type: string
+                                      - type: "null"
+
+  codemanage:
+    oneOf:
+      - type: "null"
+      - type: object
+        additionalProperties: false
+        properties:
+          installdir:
+            oneOf:
+              - type: string
+              - type: "null"
+          copyfiles:
+            oneOf:
+              - type: "null"
+              - type: array
+                items:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    path:
+                      oneOf:
+                        - type: "null"
+                        - type: array
+                          items:
+                            oneOf:
+                              - type: string
+                              - type: "null"
+                    condition:
+                      oneOf:
+                        - type: string
+                        - type: "null"
+          incdirs:
+            oneOf:
+              - type: "null"
+              - type: array
+                items:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    path:
+                      oneOf:
+                        - type: "null"
+                        - type: array
+                          items:
+                            oneOf:
+                              - type: string
+                              - type: "null"
+                    condition:
+                      oneOf:
+                        - type: string
+                        - type: "null"
+          libdirs:
+            oneOf:
+              - type: "null"
+              - type: array
+                items:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    path:
+                      oneOf:
+                        - type: "null"
+                        - type: array
+                          items:
+                            oneOf:
+                              - type: string
+                              - type: "null"
+                    condition:
+                      oneOf:
+                        - type: string
+                        - type: "null"
+          ldlibs:
+            oneOf:
+              - type: "null"
+              - type: array
+                items:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    libs:
+                      oneOf:
+                        - type: "null"
+                        - type: array
+                          items:
+                            oneOf:
+                              - type: string
+                              - type: "null"
+                    condition:
+                      oneOf:
+                        - type: string
+                        - type: "null"
+          excludefiles:
+            oneOf:
+              - type: "null"
+              - type: array
+                items:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    path:
+                      oneOf:
+                        - type: "null"
+                        - type: array
+                          items:
+                            oneOf:
+                              - type: string
+                              - type: "null"
+                    condition:
+                      oneOf:
+                        - type: string
+                        - type: "null"                
+          custom:
+            oneOf:
+              - type: boolean
+              - type: "null"     
+          srcroot:
+            oneOf:
+              - type: boolean
+              - type: "null"              
+  setconfig:
+    oneOf:
+      - type: "null"
+      - type: array
+        items:
+          type: object
+          additionalProperties: false
+          properties:
+            config:
+              oneOf:
+                - type: string
+                - type: "null"
+            value:
+              oneOf:
+                - type: string
+                - type: integer
+                - type: array
+                - type: "null"
+                - type: boolean
+            condition:
+              oneOf:
+                - type: string
+                - type: "null"
+  buildconfig:
+    oneOf:
+      - type: "null"
+      - type: array
+        items:
+          type: object
+          additionalProperties: false
+          properties:
+            type:
+              oneOf:
+                - type: string
+                - type: "null"
+            grouplibrary:
+              oneOf:
+                - type: boolean
+                - type: "null"
+            description:
+              oneOf:
+                - type: string
+                - type: "null"
+            cross_prefix:
+              oneOf:
+                - type: string
+                - type: "null"
+            toolchain_name:
+              oneOf:
+                - type: string
+                - type: "null"
+            toolchains:
+              type: object
+              additionalProperties:
+                oneOf:
+                  - type: string
+                  - type: "null"
+            linkscript:
+              oneOf:
+                - type: "null"
+                - type: array
+                  items:
+                    type: object
+                    additionalProperties: false
+                    properties:
+                      script:
+                        oneOf:
+                          - type: string
+                          - type: "null"
+                      condition:
+                        oneOf:
+                          - type: string
+                          - type: "null"
+            common_flags:
+              oneOf:
+                - type: array
+                  items:
+                    type: object
+                    additionalProperties: false
+                    properties:
+                      flags:
+                        oneOf:
+                          - type: string
+                          - type: "null"
+                      condition:
+                        oneOf:
+                          - type: string
+                          - type: "null"
+                      unflags:
+                        oneOf:
+                          - type: string
+                          - type: "null"     
+                - type: "null"
+            ldflags:
+              oneOf:
+                - type: array
+                  items:
+                    type: object
+                    additionalProperties: false
+                    properties:
+                      flags:
+                        oneOf:
+                          - type: string
+                          - type: "null"
+                      condition:
+                        oneOf:
+                          - type: string
+                          - type: "null"
+                      unflags:
+                        oneOf:
+                          - type: string
+                          - type: "null"     
+                - type: "null"
+            cflags:
+              oneOf:
+                - type: array
+                  items:
+                    type: object
+                    additionalProperties: false
+                    properties:
+                      flags:
+                        oneOf:
+                          - type: string
+                          - type: "null"
+                      condition:
+                        oneOf:
+                          - type: string
+                          - type: "null"
+                      unflags:
+                        oneOf:
+                          - type: string
+                          - type: "null"     
+                - type: "null"           
+            asmflags:
+              oneOf:
+                - type: array
+                  items:
+                    type: object
+                    additionalProperties: false
+                    properties:
+                      flags:
+                        oneOf:
+                          - type: string
+                          - type: "null"
+                      condition:
+                        oneOf:
+                          - type: string
+                          - type: "null"
+                      unflags:
+                        oneOf:
+                          - type: string
+                          - type: "null"     
+                - type: "null" 
+            cxxflags:
+              oneOf:
+                - type: array
+                  items:
+                    type: object
+                    additionalProperties: false
+                    properties:
+                      flags:
+                        oneOf:
+                          - type: string
+                          - type: "null"
+                      condition:
+                        oneOf:
+                          - type: string
+                          - type: "null"
+                      unflags:
+                        oneOf:
+                          - type: string
+                          - type: "null"     
+                - type: "null" 
+            common_defines:
+              oneOf:
+                - type: array
+                  items:
+                    type: object
+                    additionalProperties: false
+                    properties:
+                      defines:
+                        oneOf:
+                          - type: string
+                          - type: "null"
+                      condition:
+                        oneOf:
+                          - type: string
+                          - type: "null"
+                      undefines:
+                        oneOf:
+                          - type: string
+                          - type: "null"     
+                - type: "null" 
+            cdefines:
+              oneOf:
+                - type: array
+                  items:
+                    type: object
+                    additionalProperties: false
+                    properties:
+                      defines:
+                        oneOf:
+                          - type: string
+                          - type: "null"
+                      condition:
+                        oneOf:
+                          - type: string
+                          - type: "null"
+                      undefines:
+                        oneOf:
+                          - type: string
+                          - type: "null"     
+                - type: "null" 
+            asmdefines:
+              oneOf:
+                - type: array
+                  items:
+                    type: object
+                    additionalProperties: false
+                    properties:
+                      defines:
+                        oneOf:
+                          - type: string
+                          - type: "null"
+                      condition:
+                        oneOf:
+                          - type: string
+                          - type: "null"
+                      undefines:
+                        oneOf:
+                          - type: string
+                          - type: "null"     
+                - type: "null" 
+            cxxdefines:
+              oneOf:
+                - type: array
+                  items:
+                    type: object
+                    additionalProperties: false
+                    properties:
+                      defines:
+                        oneOf:
+                          - type: string
+                          - type: "null"
+                      condition:
+                        oneOf:
+                          - type: string
+                          - type: "null"
+                      undefines:
+                        oneOf:
+                          - type: string
+                          - type: "null"     
+                - type: "null" 
+            prebuild_steps:
+              type: object
+              additionalProperties: false
+              properties:
+                command:
+                  oneOf:
+                    - type: string
+                    - type: "null"
+                description:
+                  oneOf:
+                    - type: string
+                    - type: "null"
+            postbuild_steps:
+              oneOf:
+                - type: "null"
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    command:
+                      oneOf:
+                        - type: string
+                        - type: "null"
+                    description:
+                      oneOf:
+                        - type: string
+                        - type: "null"
+  debugconfig:
+    oneOf:
+      - type: "null"
+      - type: array
+        items:
+          type: object
+          additionalProperties: false
+          properties:
+            type:
+              oneOf:
+                - type: string
+                - type: "null"
+            description:
+              oneOf:
+                - type: string
+                - type: "null"
+            executable:
+              oneOf:
+                - type: string
+                - type: "null"
+            mode:
+              oneOf:
+                - type: string
+                - type: "null"
+            launch:
+              oneOf:
+                - type: string
+                - type: "null"
+            svd:
+              oneOf:
+                - type: string
+                - type: "null"
+            tool:
+              oneOf:
+                - type: string
+                - type: "null"
+            configs:
+              oneOf:
+                - type: array
+                  items:
+                    type: object
+                    additionalProperties: false
+                    properties:
+                      key:
+                        oneOf:
+                          - type: string
+                          - type: "null"
+                      condition:
+                        oneOf:
+                          - type: string
+                          - type: "null"
+                      value:
+                        oneOf:
+                          - type: string
+                          - type: "null"  
+                          - type: integer
+                          - type: boolean
+                          - type: array
+                - type: "null"        
+
+  templatemanage:
+    oneOf:
+      - type: "null"
+      - type: object
+        additionalProperties: false
+        properties:
+          installdir:
+            oneOf:
+              - type: string
+              - type: "null"
+          files:
+            oneOf:
+              - type: "null"
+              - type: object
+                additionalProperties:
+                  oneOf:
+                    - type: string
+                    - type: "null"
+  subtype:
+    enum:
+      - csp
+      - ssp
+      - bsp
+      - osp
+      - app
+      - mwp
+      - sdk
+      
+  environment:
+    oneOf:
+      - type: "null"
+      - type: object
+        additionalProperties: false
+        properties:
+          key:
+            oneOf:
+              - type: string
+              - type: "null"
+          value:
+            oneOf:
+              - type: string
+              - type: "null"  
+              - type: integer
+              - type: boolean
+              - type: array
+          description:
+            oneOf:
+              - type: string
+              - type: "null"
+          system:
+            oneOf:
+              - type: boolean
+              - type: "null"
+additionalProperties: false
